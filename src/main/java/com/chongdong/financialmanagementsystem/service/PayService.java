@@ -2,6 +2,7 @@ package com.chongdong.financialmanagementsystem.service;
 
 import com.chongdong.financialmanagementsystem.model.Pay;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.chongdong.financialmanagementsystem.model.ResponseMap;
 
 /**
 * @author cd
@@ -9,5 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-08-03 15:36:16
 */
 public interface PayService extends IService<Pay> {
-
+    ResponseMap addPay(Pay pay);
 }

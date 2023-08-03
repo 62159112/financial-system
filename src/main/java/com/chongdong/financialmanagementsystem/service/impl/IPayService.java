@@ -2,8 +2,10 @@ package com.chongdong.financialmanagementsystem.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.financialmanagementsystem.model.Pay;
+import com.chongdong.financialmanagementsystem.model.ResponseMap;
 import com.chongdong.financialmanagementsystem.service.PayService;
 import com.chongdong.financialmanagementsystem.mapper.PayMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class IPayService extends ServiceImpl<PayMapper, Pay>
     implements PayService{
-
+    @Override
+    public ResponseMap addPay(Pay pay) {
+        BeanUtils.copyProperties(pay,pay);
+        return null;
+    }
 }
 
 
