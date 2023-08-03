@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 * @createDate 2023-08-03 14:41:11
 */
 @Service
-public class IncomeServiceImpl extends ServiceImpl<IncomeMapper, Income>
+public class IIncomeService extends ServiceImpl<IncomeMapper, Income>
     implements IncomeService{
 
 }
