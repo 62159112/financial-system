@@ -1,7 +1,10 @@
 package com.chongdong.financialmanagementsystem.service;
 
+import com.chongdong.financialmanagementsystem.model.Labor;
 import com.chongdong.financialmanagementsystem.model.Payment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.chongdong.financialmanagementsystem.model.ResponseMap;
+import com.chongdong.financialmanagementsystem.model.SearchModel;
 
 /**
 * @author cd
@@ -9,9 +12,21 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-08-04 15:13:59
 */
 public interface PaymentService extends IService<Payment> {
-    Boolean addOtherWithPay(Payment payment);
+    Boolean addOtherWithPayment(Payment payment);
 
-    Boolean updateOtherWithPay(Payment payment);
+    Boolean updateOtherWithPayment(Payment payment);
 
-    Boolean deleteOtherWithPay(Payment payment);
+    Boolean deleteOtherWithPayment(Payment payment);
+
+    ResponseMap addPayment(Payment payment);
+
+    ResponseMap updatePayment(Payment payment);
+
+    ResponseMap deletePayment(Integer id);
+
+    ResponseMap getPayment(Integer id);
+
+    ResponseMap listPayment(Integer page,Integer size);
+
+    ResponseMap searchPayment(SearchModel searchModel);
 }

@@ -1,21 +1,29 @@
 package com.chongdong.financialmanagementsystem.controller;
 
 import com.chongdong.financialmanagementsystem.model.Income;
+import com.chongdong.financialmanagementsystem.model.ResponseMap;
+import com.chongdong.financialmanagementsystem.model.SearchModel;
 import com.chongdong.financialmanagementsystem.service.IncomeService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/income")
 public class IncomeController {
     @Resource
     IncomeService incomeService;
-    @PostMapping
-    public String addIncome(@RequestBody Income income){
-        incomeService.save(income);
-        return "111";
+    @GetMapping("/{id}")
+    public ResponseMap getIncome(@PathVariable Integer id){
+        return incomeService.getIncome(id);
+    }
+
+    @GetMapping("/list/{page}/{size}")
+    public ResponseMap listIncome(@PathVariable Integer page, @PathVariable Integer size){
+        return incomeService.listIncome(page,size);
+    }
+
+    @GetMapping("/search")
+    public ResponseMap searchIncome(@RequestBody SearchModel searchModel){
+        return incomeService.searchIncome(searchModel);
     }
 }

@@ -1,10 +1,20 @@
 package com.chongdong.financialmanagementsystem.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.financialmanagementsystem.model.Income;
+import com.chongdong.financialmanagementsystem.model.Payment;
+import com.chongdong.financialmanagementsystem.model.ResponseMap;
+import com.chongdong.financialmanagementsystem.model.SearchModel;
 import com.chongdong.financialmanagementsystem.service.IncomeService;
 import com.chongdong.financialmanagementsystem.mapper.IncomeMapper;
+import com.chongdong.financialmanagementsystem.utils.PageUtil;
+import com.chongdong.financialmanagementsystem.utils.ResponseMapUtil;
+import com.chongdong.financialmanagementsystem.utils.WrapperUtil;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
 * @author cd
@@ -14,7 +24,63 @@ import org.springframework.stereotype.Service;
 @Service
 public class IIncomeService extends ServiceImpl<IncomeMapper, Income>
     implements IncomeService{
+    @Resource
+    ResponseMapUtil<Income> responseMapUtil;
+    @Resource
+    WrapperUtil<Income> wrapperUtil;
+    @Resource
+    PageUtil<Income> pageUtil;
 
+
+    @Override
+    public Boolean addOtherWithIncome(Income income) {
+        return this.save(income);
+    }
+
+    @Override
+    public Boolean updateOtherWithIncome(Income income) {
+        return this.update(wrapperUtil.wrapperGetOne(income.getName(),income.getCreateTime()));
+    }
+
+    @Override
+    public Boolean deleteOtherWithIncome(Income income) {
+        return this.remove(wrapperUtil.wrapperGetOne(income.getName(),income.getCreateTime()));
+    }
+
+    @Override
+    public ResponseMap addIncome(Income income) {
+        return responseMapUtil.addEntity(this.save(income));
+    }
+
+    @Override
+    public ResponseMap updateIncome(Income income) {
+        return responseMapUtil.updateEntity(this.updateById(income));
+    }
+
+    @Override
+    public ResponseMap deleteIncome(Integer id) {
+        return responseMapUtil.deleteEntity(this.removeById(id));
+    }
+
+    @Override
+    public ResponseMap getIncome(Integer id) {
+        return responseMapUtil.getEntity(this.getById(id));
+    }
+
+    @Override
+    public ResponseMap listIncome(Integer page, Integer size) {
+        Page<Income> pageList = pageUtil.getPageList(this.getBaseMapper(),pageUtil.getModelPage(page, size));
+        Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
+        return responseMapUtil.getPageList(pageList,modelMap);
+    }
+
+    @Override
+    public ResponseMap searchIncome(SearchModel searchModel) {
+        Page<Income> pageList = this.page(pageUtil.getModelPage(searchModel.getPage(), searchModel.getSize()),
+                wrapperUtil.wrapperNormal(searchModel.getSearch(), searchModel.getStartTime(), searchModel.getEndTime()));
+        Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
+        return responseMapUtil.getPageList(pageList,modelMap);
+    }
 }
 
 

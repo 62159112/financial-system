@@ -1,10 +1,22 @@
 package com.chongdong.financialmanagementsystem.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.chongdong.financialmanagementsystem.model.Reimbursement;
+import com.chongdong.financialmanagementsystem.factory.EntityFactory;
+import com.chongdong.financialmanagementsystem.model.*;
+import com.chongdong.financialmanagementsystem.service.PaymentService;
 import com.chongdong.financialmanagementsystem.service.ReimbursementService;
 import com.chongdong.financialmanagementsystem.mapper.ReimbursementMapper;
+import com.chongdong.financialmanagementsystem.utils.PageUtil;
+import com.chongdong.financialmanagementsystem.utils.ResponseMapUtil;
+import com.chongdong.financialmanagementsystem.utils.WrapperUtil;
+import jakarta.annotation.Resource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.Map;
 
 /**
 * @author cd
@@ -14,7 +26,64 @@ import org.springframework.stereotype.Service;
 @Service
 public class IReimbursementService extends ServiceImpl<ReimbursementMapper, Reimbursement>
     implements ReimbursementService{
+    @Resource
+    PageUtil<Reimbursement> pageUtil;
+    @Resource
+    WrapperUtil<Reimbursement> wrapperUtil;
+    @Resource
+    ResponseMapUtil<Reimbursement> responseMapUtil;
+    @Resource
+    PaymentService paymentService;
 
+    Payment payment = EntityFactory.createPayment();
+
+    @Override
+    @Transactional
+    public ResponseMap addReimbursement(Reimbursement reimbursement) {
+        reimbursement.setCreateTime(new Date());
+        BeanUtils.copyProperties(reimbursement,payment);
+        payment.setType("报销成本");
+        return responseMapUtil.addEntity(this.save(reimbursement) && paymentService.addOtherWithPayment(payment));
+    }
+
+    @Override
+    @Transactional
+    public ResponseMap updateReimbursement(Reimbursement reimbursement) {
+        BeanUtils.copyProperties(reimbursement,payment);
+        payment.setId(null);
+        payment.setType(null);
+        return responseMapUtil.updateEntity(this.updateById(reimbursement) && paymentService.updateOtherWithPayment(payment));
+    }
+
+    @Override
+    @Transactional
+    public ResponseMap deleteReimbursement(Integer id) {
+        Reimbursement reimbursement = this.getById(id);
+        BeanUtils.copyProperties(reimbursement,payment);
+        payment.setId(null);
+        payment.setType(null);
+        return responseMapUtil.deleteEntity(this.removeById(id) && paymentService.deleteOtherWithPayment(payment));
+    }
+
+    @Override
+    public ResponseMap getReimbursement(Integer id) {
+        return responseMapUtil.getEntity(this.getById(id));
+    }
+
+    @Override
+    public ResponseMap listReimbursement(Integer page, Integer size) {
+        Page<Reimbursement> pageList = pageUtil.getPageList(this.getBaseMapper(),pageUtil.getModelPage(page, size));
+        Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
+        return responseMapUtil.getPageList(pageList,modelMap);
+    }
+
+    @Override
+    public ResponseMap searchReimbursement(SearchModel searchModel) {
+        Page<Reimbursement> pageList = this.page(pageUtil.getModelPage(searchModel.getPage(), searchModel.getSize()),
+                wrapperUtil.wrapperNormal(searchModel.getSearch(), searchModel.getStartTime(), searchModel.getEndTime()));
+        Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
+        return responseMapUtil.getPageList(pageList,modelMap);
+    }
 }
 
 

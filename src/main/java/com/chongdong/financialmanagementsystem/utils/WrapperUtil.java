@@ -12,7 +12,9 @@ import java.util.Date;
 
 @Service
 public class WrapperUtil<T> {
-
+    /**
+     * 搜索通用
+     * */
     public QueryWrapper<T> wrapperNormal(String search, String startTime, String endTime) {
         LocalDateTime start = LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         LocalDateTime end = LocalDateTime.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -24,12 +26,49 @@ public class WrapperUtil<T> {
         wrapper.between(StringUtils.hasLength(startTime) && StringUtils.hasLength(endTime), "create_time", start, end);
         return wrapper;
     }
-
+    /**
+     * 获取单个
+     * */
     public QueryWrapper<T> wrapperGetOne(String name, Date createTime){
         LocalDateTime localDateTime = createTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         QueryWrapper<T> wrapper = new QueryWrapper<>();
         wrapper.eq("name",name);
         wrapper.eq("create_time",localDateTime);
+        return wrapper;
+    }
+    /**
+     * 费用支出搜索使用
+     * */
+    public QueryWrapper<T> wrapperExpenses(String search, String startTime, String endTime){
+        QueryWrapper<T> wrapper = wrapperNormal(search, startTime, endTime);
+        wrapper.like(StringUtils.hasLength(search), "address", search);
+        return wrapper;
+    }
+    /**
+     * 库存条目搜索使用
+     * */
+    public QueryWrapper<T> wrapperInventory(String search, String startTime, String endTime){
+        QueryWrapper<T> wrapper = wrapperNormal(search, startTime, endTime);
+        wrapper.like(StringUtils.hasLength(search), "total", search);
+        wrapper.like(StringUtils.hasLength(search), "used_quantity", search);
+        return wrapper;
+    }
+    /**
+     * 采购条目搜索使用
+     * */
+    public QueryWrapper<T> wrapperProcurement(String search, String startTime, String endTime){
+        QueryWrapper<T> wrapper = wrapperNormal(search, startTime, endTime);
+        wrapper.like(StringUtils.hasLength(search), "unit_price", search);
+        wrapper.like(StringUtils.hasLength(search), "quantity", search);
+        return wrapper;
+    }
+    /**
+     * 销售条目搜索使用
+     * */
+    public QueryWrapper<T> wrapperSale(String search, String startTime, String endTime){
+        QueryWrapper<T> wrapper = wrapperNormal(search, startTime, endTime);
+        wrapper.like(StringUtils.hasLength(search), "quantity", search);
+        wrapper.like(StringUtils.hasLength(search), "purchaser", search);
         return wrapper;
     }
 }

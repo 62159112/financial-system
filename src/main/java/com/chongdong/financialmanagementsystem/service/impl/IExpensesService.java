@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.financialmanagementsystem.factory.EntityFactory;
 import com.chongdong.financialmanagementsystem.model.*;
-import com.chongdong.financialmanagementsystem.service.LaborService;
-import com.chongdong.financialmanagementsystem.mapper.LaborMapper;
+import com.chongdong.financialmanagementsystem.service.ExpensesService;
+import com.chongdong.financialmanagementsystem.mapper.ExpensesMapper;
 import com.chongdong.financialmanagementsystem.service.PaymentService;
 import com.chongdong.financialmanagementsystem.utils.PageUtil;
 import com.chongdong.financialmanagementsystem.utils.ResponseMapUtil;
@@ -19,19 +19,19 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * @author cd
- * @description 针对表【tcd_labor(人工成本条目)】的数据库操作Service实现
- * @createDate 2023-08-03 15:36:49
- */
+* @author cd
+* @description 针对表【tcd_expenses(费用支出条目)】的数据库操作Service实现
+* @createDate 2023-08-03 17:04:45
+*/
 @Service
-public class ILaborService extends ServiceImpl<LaborMapper, Labor>
-        implements LaborService {
+public class IExpensesService extends ServiceImpl<ExpensesMapper, Expenses>
+    implements ExpensesService{
     @Resource
-    PageUtil<Labor> pageUtil;
+    PageUtil<Expenses> pageUtil;
     @Resource
-    WrapperUtil<Labor> wrapperUtil;
+    WrapperUtil<Expenses> wrapperUtil;
     @Resource
-    ResponseMapUtil<Labor> responseMapUtil;
+    ResponseMapUtil<Expenses> responseMapUtil;
     @Resource
     PaymentService paymentService;
 
@@ -39,52 +39,51 @@ public class ILaborService extends ServiceImpl<LaborMapper, Labor>
 
     @Override
     @Transactional
-    public ResponseMap addLabor(Labor labor) {
-        labor.setCreateTime(new Date());
-        BeanUtils.copyProperties(labor,payment);
-        payment.setType("人工成本");
-        return responseMapUtil.addEntity(this.save(labor) && paymentService.addOtherWithPayment(payment));
+    public ResponseMap addExpenses(Expenses expenses) {
+        expenses.setCreateTime(new Date());
+        BeanUtils.copyProperties(expenses,payment);
+        payment.setType("费用支出成本");
+        return responseMapUtil.addEntity(this.save(expenses) && paymentService.addOtherWithPayment(payment));
     }
 
     @Override
     @Transactional
-    public ResponseMap updateLabor(Labor labor) {
-        BeanUtils.copyProperties(labor,payment);
+    public ResponseMap updateExpenses(Expenses expenses) {
+        BeanUtils.copyProperties(expenses,payment);
         payment.setId(null);
         payment.setType(null);
-        return responseMapUtil.updateEntity(this.updateById(labor) && paymentService.updateOtherWithPayment(payment));
+        return responseMapUtil.updateEntity(this.updateById(expenses) && paymentService.updateOtherWithPayment(payment));
     }
 
     @Override
     @Transactional
-    public ResponseMap deleteLabor(Integer id) {
-        Labor labor = this.getById(id);
-        BeanUtils.copyProperties(labor,payment);
+    public ResponseMap deleteExpenses(Integer id) {
+        Expenses expenses = this.getById(id);
+        BeanUtils.copyProperties(expenses,payment);
         payment.setId(null);
         payment.setType(null);
         return responseMapUtil.deleteEntity(this.removeById(id) && paymentService.deleteOtherWithPayment(payment));
     }
 
     @Override
-    public ResponseMap getLabor(Integer id) {
+    public ResponseMap getExpenses(Integer id) {
         return responseMapUtil.getEntity(this.getById(id));
     }
 
     @Override
-    public ResponseMap listLabor(Integer page, Integer size) {
-        Page<Labor> pageList = pageUtil.getPageList(this.getBaseMapper(),pageUtil.getModelPage(page, size));
+    public ResponseMap listExpenses(Integer page, Integer size) {
+        Page<Expenses> pageList = pageUtil.getPageList(this.getBaseMapper(),pageUtil.getModelPage(page, size));
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
     }
 
     @Override
-    public ResponseMap searchLabor(SearchModel searchModel) {
-        Page<Labor> pageList = this.page(pageUtil.getModelPage(searchModel.getPage(), searchModel.getSize()),
-                wrapperUtil.wrapperNormal(searchModel.getSearch(), searchModel.getStartTime(), searchModel.getEndTime()));
+    public ResponseMap searchExpenses(SearchModel searchModel) {
+        Page<Expenses> pageList = this.page(pageUtil.getModelPage(searchModel.getPage(), searchModel.getSize()),
+                wrapperUtil.wrapperExpenses(searchModel.getSearch(), searchModel.getStartTime(), searchModel.getEndTime()));
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
     }
-
 }
 
 

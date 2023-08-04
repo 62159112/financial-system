@@ -2,6 +2,9 @@ package com.chongdong.financialmanagementsystem.service;
 
 import com.chongdong.financialmanagementsystem.model.Expenses;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.chongdong.financialmanagementsystem.model.Income;
+import com.chongdong.financialmanagementsystem.model.ResponseMap;
+import com.chongdong.financialmanagementsystem.model.SearchModel;
 
 /**
 * @author cd
@@ -9,5 +12,15 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-08-03 17:04:45
 */
 public interface ExpensesService extends IService<Expenses> {
+    ResponseMap addExpenses(Expenses expenses);
 
+    ResponseMap updateExpenses(Expenses expenses);
+
+    ResponseMap deleteExpenses(Integer id);
+
+    ResponseMap getExpenses(Integer id);
+
+    ResponseMap listExpenses(Integer page,Integer size);
+
+    ResponseMap searchExpenses(SearchModel searchModel);
 }
