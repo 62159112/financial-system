@@ -2,6 +2,8 @@ package com.chongdong.financialmanagementsystem.service;
 
 import com.chongdong.financialmanagementsystem.model.Inventory;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.chongdong.financialmanagementsystem.model.ResponseMap;
+import com.chongdong.financialmanagementsystem.model.SearchModel;
 
 /**
 * @author cd
@@ -9,5 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-08-03 15:36:33
 */
 public interface InventoryService extends IService<Inventory> {
+    ResponseMap listInventory(Integer page, Integer size);
+    ResponseMap searchInventory(SearchModel searchModel);
 
 }
