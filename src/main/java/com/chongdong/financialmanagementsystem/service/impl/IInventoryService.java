@@ -1,10 +1,20 @@
 package com.chongdong.financialmanagementsystem.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.financialmanagementsystem.model.Inventory;
+import com.chongdong.financialmanagementsystem.model.Labor;
+import com.chongdong.financialmanagementsystem.model.ResponseMap;
+import com.chongdong.financialmanagementsystem.model.SearchModel;
 import com.chongdong.financialmanagementsystem.service.InventoryService;
 import com.chongdong.financialmanagementsystem.mapper.InventoryMapper;
+import com.chongdong.financialmanagementsystem.utils.PageUtil;
+import com.chongdong.financialmanagementsystem.utils.ResponseMapUtil;
+import com.chongdong.financialmanagementsystem.utils.WrapperUtil;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
 * @author cd
@@ -14,7 +24,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class IInventoryService extends ServiceImpl<InventoryMapper, Inventory>
     implements InventoryService{
+    @Resource
+    PageUtil<Inventory> pageUtil;
+    @Resource
+    WrapperUtil<Inventory> wrapperUtil;
+    @Resource
+    ResponseMapUtil<Inventory> responseMapUtil;
 
+    @Override
+    public ResponseMap listInventory(Integer page, Integer size) {
+        Page<Inventory> pageList = pageUtil.getPageList(this.getBaseMapper(),pageUtil.getModelPage(page, size));
+        Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
+        return responseMapUtil.getPageList(pageList,modelMap);
+    }
+
+    @Override
+    public ResponseMap searchInventory(SearchModel searchModel) {
+        Page<Inventory> pageList = this.page(pageUtil.getModelPage(searchModel.getPage(), searchModel.getSize()),
+        wrapperUtil.wrapperNormal(searchModel.getSearch(), searchModel.getStartTime(), searchModel.getEndTime()));
+        Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
+        return responseMapUtil.getPageList(pageList,modelMap);
+    }
 }
 
 
