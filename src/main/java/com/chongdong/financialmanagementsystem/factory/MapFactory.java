@@ -8,5 +8,5 @@ public class MapFactory {
         return new ResponseMap();
     }
 
-    public static Pay createPay(){return new Pay();}
+
 }

@@ -10,5 +10,9 @@ import com.chongdong.financialmanagementsystem.model.ResponseMap;
 * @createDate 2023-08-03 15:36:16
 */
 public interface PayService extends IService<Pay> {
-    ResponseMap addPay(Pay pay);
+    Boolean addOtherWithPay(Pay pay);
+
+    Boolean updateOtherWithPay(Pay pay);
+
+    Boolean deleteOtherWithPay(Pay pay);
 }
