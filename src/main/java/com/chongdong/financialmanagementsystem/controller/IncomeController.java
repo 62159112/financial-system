@@ -15,6 +15,7 @@ public class IncomeController {
     IncomeService incomeService;
     @PostMapping
     public String addIncome(@RequestBody Income income){
+        System.out.println(income.toString()+"!!!!!!!!!");
         incomeService.save(income);
         return "111";
     }
