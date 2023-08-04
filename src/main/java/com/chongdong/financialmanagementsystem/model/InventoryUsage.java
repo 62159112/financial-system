@@ -41,6 +41,11 @@ public class InventoryUsage implements Serializable {
      */
     private String remark;
 
+    /**
+     * 物品名称
+     */
+    private String article;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }
