@@ -1,5 +1,6 @@
 package com.chongdong.financialmanagementsystem.factory;
 
+import com.chongdong.financialmanagementsystem.model.Pay;
 import com.chongdong.financialmanagementsystem.model.ResponseMap;
 
 public class MapFactory {
@@ -7,4 +8,5 @@ public class MapFactory {
         return new ResponseMap();
     }
 
+    public static Pay createPay(){return new Pay();}
 }

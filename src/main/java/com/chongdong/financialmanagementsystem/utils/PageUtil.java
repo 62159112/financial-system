@@ -1,21 +1,23 @@
-package com.chongdong.financialmanagementsystem.service.impl;
+package com.chongdong.financialmanagementsystem.utils;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.chongdong.financialmanagementsystem.service.PageService;
+import com.chongdong.financialmanagementsystem.model.Labor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @Service
-public class IPageService<T> implements PageService<T> {
+public class PageUtil<T> {
     /**
-     * è·å–æ•°æ®ï¼Œè¿”å›æ•°æ®åŠåˆ†é¡µä¿¡æ¯
+     * »ñÈ¡Êı¾İ£¬·µ»ØÊı¾İ¼°·ÖÒ³ĞÅÏ¢
      * */
-    @Override
     public Map<String, Object> getModelMap(Page<T> iPage) {
         Map<String,Object> map = new HashMap<>();
         if (iPage.getRecords().size()>0){
@@ -30,9 +32,8 @@ public class IPageService<T> implements PageService<T> {
         }
     }
     /**
-     * è®¾ç½®é»˜è®¤åˆ†é¡µæ•°æ®
+     * ÉèÖÃÄ¬ÈÏ·ÖÒ³Êı¾İ
      * */
-    @Override
     public Page<T> getModelPage(Integer page, Integer size) {
         if (page==null){
             page = 1;
@@ -43,9 +44,8 @@ public class IPageService<T> implements PageService<T> {
         return new Page<>(page,size);
     }
     /**
-     * è·å–å®ä½“ç±»åˆ†é¡µåˆ—è¡¨
+     * »ñÈ¡ÊµÌåÀà·ÖÒ³ÁĞ±í
      * */
-    @Override
     public Page<T> getPageList(BaseMapper<T> baseMapper, Page<T> page) {
         return new LambdaQueryChainWrapper<>(baseMapper).page(page);
     }

@@ -1,110 +1,103 @@
-package com.chongdong.financialmanagementsystem.service.impl;
+package com.chongdong.financialmanagementsystem.utils;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chongdong.financialmanagementsystem.factory.MapFactory;
 import com.chongdong.financialmanagementsystem.model.ResponseMap;
-import com.chongdong.financialmanagementsystem.service.ResponseMapService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class IResponseMapService<T> implements ResponseMapService<T> {
+public class ResponseMapUtil<T>{
     ResponseMap responseMap = MapFactory.createResponseMap();
     /**
-     * è·å–å•ä¸ªå®ä½“ç±»è¿”å›æ•°æ®
+     * »ñÈ¡µ¥¸öÊµÌåÀà·µ»ØÊı¾İ
      * */
-    @Override
     public ResponseMap getEntity(T entity) {
         if (entity!=null){
             responseMap.setFlag(true);
             responseMap.setData(entity);
-            responseMap.setMessage("æŸ¥è¯¢å•ä¸ªæˆåŠŸ");
+            responseMap.setMessage("²éÑ¯µ¥¸ö³É¹¦");
         }else {
             responseMap.setFlag(false);
             responseMap.setData(null);
-            responseMap.setMessage("æŸ¥è¯¢å•ä¸ªå¤±è´¥");
+            responseMap.setMessage("²éÑ¯µ¥¸öÊ§°Ü");
         }
         return responseMap;
     }
     /**
-     * è·å–å®ä½“ç±»åˆ†é¡µåˆ—è¡¨è¿”å›æ•°æ®
+     * »ñÈ¡ÊµÌåÀà·ÖÒ³ÁĞ±í·µ»ØÊı¾İ
      * */
-    @Override
     public ResponseMap getPageList(Page<T> pageList, Map<String, Object> modelMap) {
         if (pageList.getRecords().size()!=0){
             responseMap.setFlag(true);
             responseMap.setData(modelMap);
-            responseMap.setMessage("æŸ¥è¯¢åˆ—è¡¨æˆåŠŸ");
+            responseMap.setMessage("²éÑ¯ÁĞ±í³É¹¦");
         }else {
             responseMap.setFlag(false);
             responseMap.setData(null);
-            responseMap.setMessage("æŸ¥è¯¢åˆ—è¡¨å¤±è´¥");
+            responseMap.setMessage("²éÑ¯ÁĞ±íÊ§°Ü");
         }
         return responseMap;
     }
     /**
-     * æ›´æ–°å®ä½“ç±»è¿”å›ç»“æœ
+     * ¸üĞÂÊµÌåÀà·µ»Ø½á¹û
      * */
-    @Override
     public ResponseMap updateEntity(boolean result) {
         if (result){
             responseMap.setFlag(true);
             responseMap.setData(null);
-            responseMap.setMessage("ä¿®æ”¹æˆåŠŸ");
+            responseMap.setMessage("ĞŞ¸Ä³É¹¦");
         }else {
             responseMap.setFlag(false);
             responseMap.setData(null);
-            responseMap.setMessage("ä¿®æ”¹å¤±è´¥");
+            responseMap.setMessage("ĞŞ¸ÄÊ§°Ü");
         }
         return responseMap;
     }
     /**
-     * åˆ é™¤å®ä½“ç±»è¿”å›ç»“æœ
+     * É¾³ıÊµÌåÀà·µ»Ø½á¹û
      * */
-    @Override
     public ResponseMap deleteEntity(boolean result) {
         if (result){
             responseMap.setFlag(true);
             responseMap.setData(null);
-            responseMap.setMessage("åˆ é™¤æˆåŠŸ");
+            responseMap.setMessage("É¾³ı³É¹¦");
         }else {
             responseMap.setFlag(false);
             responseMap.setData(null);
-            responseMap.setMessage("åˆ é™¤å¤±è´¥");
+            responseMap.setMessage("É¾³ıÊ§°Ü");
         }
         return responseMap;
     }
     /**
-     * æ·»åŠ å®ä½“ç±»è¿”å›ç»“æœ
+     * Ìí¼ÓÊµÌåÀà·µ»Ø½á¹û
      * */
-    @Override
     public ResponseMap addEntity(boolean result) {
         if (result){
             responseMap.setFlag(true);
             responseMap.setData(null);
-            responseMap.setMessage("æ–°å¢æˆåŠŸ");
+            responseMap.setMessage("ĞÂÔö³É¹¦");
         }else {
             responseMap.setFlag(false);
             responseMap.setData(null);
-            responseMap.setMessage("æ–°å¢å¤±è´¥");
+            responseMap.setMessage("ĞÂÔöÊ§°Ü");
         }
         return responseMap;
     }
     /**
-     * è·å–å®ä½“ç±»åˆ—è¡¨è¿”å›ç»“æœ
+     * »ñÈ¡ÊµÌåÀàÁĞ±í·µ»Ø½á¹û
      * */
-    @Override
     public ResponseMap getList(List<T> entityList) {
         if (entityList.size()!=0){
             responseMap.setFlag(true);
             responseMap.setData(entityList);
-            responseMap.setMessage("æŸ¥è¯¢åˆ—è¡¨æˆåŠŸ");
+            responseMap.setMessage("²éÑ¯ÁĞ±í³É¹¦");
         }else {
             responseMap.setFlag(false);
             responseMap.setData(null);
-            responseMap.setMessage("æŸ¥è¯¢åˆ—è¡¨å¤±è´¥");
+            responseMap.setMessage("²éÑ¯ÁĞ±íÊ§°Ü");
         }
         return responseMap;
     }

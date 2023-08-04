@@ -5,7 +5,8 @@ import com.chongdong.financialmanagementsystem.model.Pay;
 import com.chongdong.financialmanagementsystem.model.ResponseMap;
 import com.chongdong.financialmanagementsystem.service.PayService;
 import com.chongdong.financialmanagementsystem.mapper.PayMapper;
-import org.springframework.beans.BeanUtils;
+import com.chongdong.financialmanagementsystem.utils.ResponseMapUtil;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,10 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class IPayService extends ServiceImpl<PayMapper, Pay>
     implements PayService{
+    @Resource
+    ResponseMapUtil<Pay> responseMapUtil;
     @Override
     public ResponseMap addPay(Pay pay) {
-        BeanUtils.copyProperties(pay,pay);
-        return null;
+        return responseMapUtil.addEntity(this.save(pay));
     }
 }
 
