@@ -3,21 +3,16 @@ package com.chongdong.financialmanagementsystem.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.financialmanagementsystem.factory.EntityFactory;
-import com.chongdong.financialmanagementsystem.factory.MapFactory;
-import com.chongdong.financialmanagementsystem.model.Labor;
-import com.chongdong.financialmanagementsystem.model.Pay;
-import com.chongdong.financialmanagementsystem.model.ResponseMap;
-import com.chongdong.financialmanagementsystem.model.SearchModel;
+import com.chongdong.financialmanagementsystem.model.*;
 import com.chongdong.financialmanagementsystem.service.LaborService;
 import com.chongdong.financialmanagementsystem.mapper.LaborMapper;
-import com.chongdong.financialmanagementsystem.service.PayService;
+import com.chongdong.financialmanagementsystem.service.PaymentService;
 import com.chongdong.financialmanagementsystem.utils.PageUtil;
 import com.chongdong.financialmanagementsystem.utils.ResponseMapUtil;
 import com.chongdong.financialmanagementsystem.utils.WrapperUtil;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.Map;
@@ -37,33 +32,33 @@ public class ILaborService extends ServiceImpl<LaborMapper, Labor>
     @Resource
     ResponseMapUtil<Labor> responseMapUtil;
     @Resource
-    PayService payService;
+    PaymentService paymentService;
 
-    Pay pay = EntityFactory.createPay();
+    Payment payment = EntityFactory.createPayment();
 
     @Override
     public ResponseMap addLabor(Labor labor) {
         labor.setCreateTime(new Date());
-        BeanUtils.copyProperties(labor,pay);
-        pay.setType(StringUtils.trimAllWhitespace("人工成本"));
-        return responseMapUtil.addEntity(this.save(labor) && payService.addOtherWithPay(pay));
+        BeanUtils.copyProperties(labor,payment);
+        payment.setType("人工成本");
+        return responseMapUtil.addEntity(this.save(labor) && paymentService.addOtherWithPay(payment));
     }
 
     @Override
     public ResponseMap updateLabor(Labor labor) {
-        BeanUtils.copyProperties(labor,pay);
-        pay.setId(null);
-        pay.setType(null);
-        return responseMapUtil.updateEntity(this.updateById(labor) && payService.updateOtherWithPay(pay));
+        BeanUtils.copyProperties(labor,payment);
+        payment.setId(null);
+        payment.setType(null);
+        return responseMapUtil.updateEntity(this.updateById(labor) && paymentService.updateOtherWithPay(payment));
     }
 
     @Override
     public ResponseMap deleteLabor(Integer id) {
         Labor labor = this.getById(id);
-        BeanUtils.copyProperties(labor,pay);
-        pay.setId(null);
-        pay.setType(null);
-        return responseMapUtil.deleteEntity(this.removeById(id) && payService.deleteOtherWithPay(pay));
+        BeanUtils.copyProperties(labor,payment);
+        payment.setId(null);
+        payment.setType(null);
+        return responseMapUtil.deleteEntity(this.removeById(id) && paymentService.deleteOtherWithPay(payment));
     }
 
     @Override

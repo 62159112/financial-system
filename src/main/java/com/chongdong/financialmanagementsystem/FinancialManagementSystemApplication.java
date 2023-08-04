@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FinancialManagementSystemApplication {
 
     public static void main(String[] args) {
+        System.out.println("打发打发");
         SpringApplication.run(FinancialManagementSystemApplication.class, args);
     }
 

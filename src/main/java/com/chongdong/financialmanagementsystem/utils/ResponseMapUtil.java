@@ -12,92 +12,92 @@ import java.util.Map;
 public class ResponseMapUtil<T>{
     ResponseMap responseMap = MapFactory.createResponseMap();
     /**
-     * »ñÈ¡µ¥¸öÊµÌåÀà·µ»ØÊı¾İ
+     * è·å–å•ä¸ªå®ä½“ç±»è¿”å›æ•°æ®
      * */
     public ResponseMap getEntity(T entity) {
         if (entity!=null){
             responseMap.setFlag(true);
             responseMap.setData(entity);
-            responseMap.setMessage("²éÑ¯µ¥¸ö³É¹¦");
+            responseMap.setMessage("æŸ¥è¯¢å•ä¸ªæˆåŠŸ");
         }else {
             responseMap.setFlag(false);
             responseMap.setData(null);
-            responseMap.setMessage("²éÑ¯µ¥¸öÊ§°Ü");
+            responseMap.setMessage("æŸ¥è¯¢å•ä¸ªå¤±è´¥");
         }
         return responseMap;
     }
     /**
-     * »ñÈ¡ÊµÌåÀà·ÖÒ³ÁĞ±í·µ»ØÊı¾İ
+     * è·å–å®ä½“ç±»åˆ†é¡µåˆ—è¡¨è¿”å›æ•°æ®
      * */
     public ResponseMap getPageList(Page<T> pageList, Map<String, Object> modelMap) {
         if (pageList.getRecords().size()!=0){
             responseMap.setFlag(true);
             responseMap.setData(modelMap);
-            responseMap.setMessage("²éÑ¯ÁĞ±í³É¹¦");
+            responseMap.setMessage("æŸ¥è¯¢åˆ—è¡¨æˆåŠŸ");
         }else {
             responseMap.setFlag(false);
             responseMap.setData(null);
-            responseMap.setMessage("²éÑ¯ÁĞ±íÊ§°Ü");
+            responseMap.setMessage("æŸ¥è¯¢åˆ—è¡¨å¤±è´¥");
         }
         return responseMap;
     }
     /**
-     * ¸üĞÂÊµÌåÀà·µ»Ø½á¹û
+     * æ›´æ–°å®ä½“ç±»è¿”å›ç»“æœ
      * */
     public ResponseMap updateEntity(boolean result) {
         if (result){
             responseMap.setFlag(true);
             responseMap.setData(null);
-            responseMap.setMessage("ĞŞ¸Ä³É¹¦");
+            responseMap.setMessage("ä¿®æ”¹æˆåŠŸ");
         }else {
             responseMap.setFlag(false);
             responseMap.setData(null);
-            responseMap.setMessage("ĞŞ¸ÄÊ§°Ü");
+            responseMap.setMessage("ä¿®æ”¹å¤±è´¥");
         }
         return responseMap;
     }
     /**
-     * É¾³ıÊµÌåÀà·µ»Ø½á¹û
+     * åˆ é™¤å®ä½“ç±»è¿”å›ç»“æœ
      * */
     public ResponseMap deleteEntity(boolean result) {
         if (result){
             responseMap.setFlag(true);
             responseMap.setData(null);
-            responseMap.setMessage("É¾³ı³É¹¦");
+            responseMap.setMessage("åˆ é™¤æˆåŠŸ");
         }else {
             responseMap.setFlag(false);
             responseMap.setData(null);
-            responseMap.setMessage("É¾³ıÊ§°Ü");
+            responseMap.setMessage("åˆ é™¤å¤±è´¥");
         }
         return responseMap;
     }
     /**
-     * Ìí¼ÓÊµÌåÀà·µ»Ø½á¹û
+     * æ·»åŠ å®ä½“ç±»è¿”å›ç»“æœ
      * */
     public ResponseMap addEntity(boolean result) {
         if (result){
             responseMap.setFlag(true);
             responseMap.setData(null);
-            responseMap.setMessage("ĞÂÔö³É¹¦");
+            responseMap.setMessage("æ–°å¢æˆåŠŸ");
         }else {
             responseMap.setFlag(false);
             responseMap.setData(null);
-            responseMap.setMessage("ĞÂÔöÊ§°Ü");
+            responseMap.setMessage("æ–°å¢å¤±è´¥");
         }
         return responseMap;
     }
     /**
-     * »ñÈ¡ÊµÌåÀàÁĞ±í·µ»Ø½á¹û
+     * è·å–å®ä½“ç±»åˆ—è¡¨è¿”å›ç»“æœ
      * */
     public ResponseMap getList(List<T> entityList) {
         if (entityList.size()!=0){
             responseMap.setFlag(true);
             responseMap.setData(entityList);
-            responseMap.setMessage("²éÑ¯ÁĞ±í³É¹¦");
+            responseMap.setMessage("æŸ¥è¯¢åˆ—è¡¨æˆåŠŸ");
         }else {
             responseMap.setFlag(false);
             responseMap.setData(null);
-            responseMap.setMessage("²éÑ¯ÁĞ±íÊ§°Ü");
+            responseMap.setMessage("æŸ¥è¯¢åˆ—è¡¨å¤±è´¥");
         }
         return responseMap;
     }
