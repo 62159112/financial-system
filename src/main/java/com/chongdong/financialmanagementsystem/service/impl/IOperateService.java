@@ -24,7 +24,7 @@ import java.util.Map;
 * @createDate 2023-08-03 15:36:52
 */
 @Service
-public class IOperateService extends ServiceImpl<OperateMapper, Operate>
+public class  IOperateService extends ServiceImpl<OperateMapper, Operate>
     implements OperateService{
     @Resource
     PageUtil<Operate> pageUtil;

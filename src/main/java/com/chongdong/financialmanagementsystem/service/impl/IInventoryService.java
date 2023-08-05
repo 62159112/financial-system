@@ -32,6 +32,26 @@ public class IInventoryService extends ServiceImpl<InventoryMapper, Inventory>
     ResponseMapUtil<Inventory> responseMapUtil;
 
     @Override
+    public ResponseMap addInventory(Inventory inventory) {
+        return null;
+    }
+
+    @Override
+    public ResponseMap updateInventory(Inventory inventory) {
+        return null;
+    }
+
+    @Override
+    public ResponseMap deleteInventory(Integer id) {
+        return null;
+    }
+
+    @Override
+    public ResponseMap getInventory(Integer id) {
+        return null;
+    }
+
+    @Override
     public ResponseMap listInventory(Integer page, Integer size) {
         Page<Inventory> pageList = pageUtil.getPageList(this.getBaseMapper(),pageUtil.getModelPage(page, size));
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
