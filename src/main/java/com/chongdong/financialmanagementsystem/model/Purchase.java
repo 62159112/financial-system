@@ -38,6 +38,11 @@ public class Purchase implements Serializable {
     private BigDecimal amount;
 
     /**
+     * 购置物品数量
+     */
+    private Integer quantity;
+
+    /**
      * 购置条目购置时间
      */
     private Date createTime;

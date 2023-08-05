@@ -45,6 +45,31 @@ public class IInventoryService extends ServiceImpl<InventoryMapper, Inventory>
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
     }
+
+    @Override
+    public Boolean addOtherWithInventory(Inventory inventory) {
+        Inventory oldInventory = this.getOne(wrapperUtil.wrapperName(inventory.getName()));
+        if (oldInventory==null){
+            return this.save(inventory);
+        }else {
+            oldInventory.setTotal(oldInventory.getTotal()+ inventory.getTotal());
+            return this.updateById(oldInventory);
+        }
+    }
+
+    @Override
+    public Boolean UpdateOtherWithInventory(Inventory inventory) {
+        Inventory oldInventory = this.getOne(wrapperUtil.wrapperName(inventory.getName()));
+        oldInventory.setTotal(oldInventory.getTotal()+ inventory.getTotal());
+        return this.updateById(oldInventory);
+    }
+
+    @Override
+    public Boolean deleteOtherWithInventory(Inventory inventory) {
+        Inventory oldInventory = this.getOne(wrapperUtil.wrapperName(inventory.getName()));
+        oldInventory.setTotal(oldInventory.getTotal() - inventory.getTotal());
+        return this.updateById(oldInventory);
+    }
 }
 
 

@@ -14,4 +14,9 @@ public interface InventoryService extends IService<Inventory> {
     ResponseMap listInventory(Integer page, Integer size);
     ResponseMap searchInventory(SearchModel searchModel);
 
+    Boolean addOtherWithInventory(Inventory inventory);
+
+    Boolean UpdateOtherWithInventory(Inventory inventory);
+
+    Boolean deleteOtherWithInventory(Inventory inventory);
 }

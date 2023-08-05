@@ -42,7 +42,7 @@ public class IExpensesService extends ServiceImpl<ExpensesMapper, Expenses>
     public ResponseMap addExpenses(Expenses expenses) {
         expenses.setCreateTime(new Date());
         BeanUtils.copyProperties(expenses,payment);
-        payment.setType("费用支出成本");
+        payment.setType("费用成本");
         return responseMapUtil.addEntity(this.save(expenses) && paymentService.addOtherWithPayment(payment));
     }
 

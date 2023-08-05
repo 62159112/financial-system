@@ -13,6 +13,7 @@ import com.chongdong.financialmanagementsystem.utils.ResponseMapUtil;
 import com.chongdong.financialmanagementsystem.utils.WrapperUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -46,18 +47,20 @@ public class IIncomeService extends ServiceImpl<IncomeMapper, Income>
     public Boolean deleteOtherWithIncome(Income income) {
         return this.remove(wrapperUtil.wrapperGetOne(income.getName(),income.getCreateTime()));
     }
-
+    //TODO 修改删除根据类型找到相应service（若为其它则不管）  使用事务同时删除
     @Override
     public ResponseMap addIncome(Income income) {
         return responseMapUtil.addEntity(this.save(income));
     }
 
     @Override
+    @Transactional
     public ResponseMap updateIncome(Income income) {
         return responseMapUtil.updateEntity(this.updateById(income));
     }
 
     @Override
+    @Transactional
     public ResponseMap deleteIncome(Integer id) {
         return responseMapUtil.deleteEntity(this.removeById(id));
     }

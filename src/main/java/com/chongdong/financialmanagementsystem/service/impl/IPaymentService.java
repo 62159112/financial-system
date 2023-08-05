@@ -13,6 +13,7 @@ import com.chongdong.financialmanagementsystem.utils.ResponseMapUtil;
 import com.chongdong.financialmanagementsystem.utils.WrapperUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -47,19 +48,22 @@ public class IPaymentService extends ServiceImpl<PaymentMapper, Payment>
     public Boolean deleteOtherWithPayment(Payment payment) {
         return this.remove(wrapperUtil.wrapperGetOne(payment.getName(),payment.getCreateTime()));
     }
-
+    //TODO 修改删除根据类型找到相应service（若为其它则不管）  使用事务同时删除
     @Override
     public ResponseMap addPayment(Payment payment) {
         return responseMapUtil.addEntity(this.save(payment));
     }
 
     @Override
+    @Transactional
     public ResponseMap updatePayment(Payment payment) {
         return responseMapUtil.updateEntity(this.updateById(payment));
     }
 
     @Override
+    @Transactional
     public ResponseMap deletePayment(Integer id) {
+        Payment payment = this.getById(id);
         return responseMapUtil.deleteEntity(this.removeById(id));
     }
 

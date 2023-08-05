@@ -33,9 +33,9 @@ public class Procurement implements Serializable {
     private String type;
 
     /**
-     * 采购条目单价
+     * 采购条目总价
      */
-    private BigDecimal unitPrice;
+    private BigDecimal amount;
 
     /**
      * 采购条目数量

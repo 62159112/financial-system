@@ -1,6 +1,7 @@
 package com.chongdong.financialmanagementsystem.utils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.chongdong.financialmanagementsystem.model.Type;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -32,7 +33,7 @@ public class WrapperUtil<T> {
     public QueryWrapper<T> wrapperGetOne(String name, Date createTime){
         LocalDateTime localDateTime = createTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         QueryWrapper<T> wrapper = new QueryWrapper<>();
-        wrapper.eq("name",name);
+        wrapper.eq(StringUtils.hasLength(name),"name",name);
         wrapper.eq("create_time",localDateTime);
         return wrapper;
     }
@@ -58,7 +59,6 @@ public class WrapperUtil<T> {
      * */
     public QueryWrapper<T> wrapperProcurement(String search, String startTime, String endTime){
         QueryWrapper<T> wrapper = wrapperNormal(search, startTime, endTime);
-        wrapper.like(StringUtils.hasLength(search), "unit_price", search);
         wrapper.like(StringUtils.hasLength(search), "quantity", search);
         return wrapper;
     }
@@ -69,6 +69,19 @@ public class WrapperUtil<T> {
         QueryWrapper<T> wrapper = wrapperNormal(search, startTime, endTime);
         wrapper.like(StringUtils.hasLength(search), "quantity", search);
         wrapper.like(StringUtils.hasLength(search), "purchaser", search);
+        return wrapper;
+    }
+    /**
+     * 类型列表使用
+     * */
+    public QueryWrapper<T> wrapperType(Integer belong){
+        QueryWrapper<T> wrapper = new QueryWrapper<>();
+        wrapper.eq(StringUtils.hasLength(String.valueOf(belong)),"type_belong",belong);
+        return wrapper;
+    }
+    public QueryWrapper<T> wrapperName(String name){
+        QueryWrapper<T> wrapper = new QueryWrapper<>();
+        wrapper.eq(StringUtils.hasLength(String.valueOf(name)),"name",name);
         return wrapper;
     }
 }

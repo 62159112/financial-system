@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chongdong.financialmanagementsystem.factory.EntityFactory;
 import com.chongdong.financialmanagementsystem.model.*;
+import com.chongdong.financialmanagementsystem.service.InventoryService;
 import com.chongdong.financialmanagementsystem.service.PaymentService;
 import com.chongdong.financialmanagementsystem.service.PurchaseService;
 import com.chongdong.financialmanagementsystem.mapper.PurchaseMapper;
@@ -34,25 +35,35 @@ public class IPurchaseService extends ServiceImpl<PurchaseMapper, Purchase>
     ResponseMapUtil<Purchase> responseMapUtil;
     @Resource
     PaymentService paymentService;
+    @Resource
+    InventoryService inventoryService;
 
     Payment payment = EntityFactory.createPayment();
-    //TODO 同时添加进库存管理，若有直接在已有项添加，若无则创建新项 修改判断是否有数量变化，删除直接减
+
+    Inventory inventory = EntityFactory.createInventory();
     @Override
     @Transactional
     public ResponseMap addPurchase(Purchase purchase) {
         purchase.setCreateTime(new Date());
         BeanUtils.copyProperties(purchase,payment);
         payment.setType("购置成本");
-        return responseMapUtil.addEntity(this.save(purchase) && paymentService.addOtherWithPayment(payment));
+        BeanUtils.copyProperties(purchase,inventory);
+        inventory.setTotal(purchase.getQuantity());
+        return responseMapUtil.addEntity(this.save(purchase) && paymentService.addOtherWithPayment(payment)
+        && inventoryService.addOtherWithInventory(inventory));
     }
 
     @Override
     @Transactional
     public ResponseMap updatePurchase(Purchase purchase) {
+        Purchase oldPurchase = this.getById(purchase.getId());
         BeanUtils.copyProperties(purchase,payment);
         payment.setId(null);
         payment.setType(null);
-        return responseMapUtil.updateEntity(this.updateById(purchase) && paymentService.updateOtherWithPayment(payment));
+        BeanUtils.copyProperties(purchase,inventory);
+        inventory.setTotal(purchase.getQuantity() - oldPurchase.getQuantity());
+        return responseMapUtil.updateEntity(this.updateById(purchase) && paymentService.updateOtherWithPayment(payment)
+        && inventoryService.UpdateOtherWithInventory(inventory));
     }
 
     @Override
@@ -62,7 +73,10 @@ public class IPurchaseService extends ServiceImpl<PurchaseMapper, Purchase>
         BeanUtils.copyProperties(purchase,payment);
         payment.setId(null);
         payment.setType(null);
-        return responseMapUtil.deleteEntity(this.removeById(id) && paymentService.deleteOtherWithPayment(payment));
+        BeanUtils.copyProperties(purchase,inventory);
+        inventory.setTotal(purchase.getQuantity());
+        return responseMapUtil.deleteEntity(this.removeById(id) && paymentService.deleteOtherWithPayment(payment)
+        && inventoryService.deleteOtherWithInventory(inventory));
     }
 
     @Override
@@ -80,7 +94,7 @@ public class IPurchaseService extends ServiceImpl<PurchaseMapper, Purchase>
     @Override
     public ResponseMap searchPurchase(SearchModel searchModel) {
         Page<Purchase> pageList = this.page(pageUtil.getModelPage(searchModel.getPage(), searchModel.getSize()),
-                wrapperUtil.wrapperNormal(searchModel.getSearch(), searchModel.getStartTime(), searchModel.getEndTime()));
+                wrapperUtil.wrapperProcurement(searchModel.getSearch(), searchModel.getStartTime(), searchModel.getEndTime()));
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
     }
