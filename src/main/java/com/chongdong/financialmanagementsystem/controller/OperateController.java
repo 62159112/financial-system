@@ -43,4 +43,9 @@ public class OperateController {
     public ResponseMap searchOperate(@RequestBody SearchModel searchModel){
         return operateService.searchOperate(searchModel);
     }
+
+    @GetMapping("/count")
+    public ResponseMap countOperate(){
+        return operateService.countOperate();
+    }
 }

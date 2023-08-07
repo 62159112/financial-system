@@ -27,4 +27,6 @@ public interface SaleService extends IService<Sale> {
     Boolean updateWithIncome(Sale sale);
 
     Boolean deleteWithIncome(Sale sale);
+
+    ResponseMap countSale();
 }

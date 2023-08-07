@@ -15,7 +15,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -96,6 +98,16 @@ public class IReimbursementService extends ServiceImpl<ReimbursementMapper, Reim
     public Boolean deleteWithPayment(Reimbursement reimbursement) {
         Reimbursement oldReimbursement = this.getOne(wrapperUtil.wrapperTime(reimbursement.getCreateTime()));
         return this.removeById(oldReimbursement.getId());
+    }
+
+    @Override
+    public ResponseMap countReimbursement() {
+        List<Reimbursement> reimbursementList = this.list();
+        BigDecimal count = BigDecimal.valueOf(0);
+        for (Reimbursement reimbursement : reimbursementList) {
+            count = count.add(reimbursement.getAmount());
+        }
+        return responseMapUtil.countList(count);
     }
 }
 

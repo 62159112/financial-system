@@ -27,4 +27,6 @@ public interface LaborService extends IService<Labor> {
     Boolean updateWithPayment(Labor labor);
 
     Boolean deleteWithPayment(Labor labor);
+
+    ResponseMap countLabor();
 }

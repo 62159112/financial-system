@@ -24,4 +24,6 @@ public interface OperateService extends IService<Operate> {
     Boolean updateWithPayment(Operate operate);
 
     Boolean deleteWithPayment(Operate operate);
+
+    ResponseMap countOperate();
 }

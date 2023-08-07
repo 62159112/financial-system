@@ -42,4 +42,9 @@ public class SaleController {
     public ResponseMap searchSale(@RequestBody SearchModel searchModel){
         return saleService.searchSale(searchModel);
     }
+
+    @GetMapping("/count")
+    public ResponseMap countSale(){
+        return saleService.countSale();
+    }
 }

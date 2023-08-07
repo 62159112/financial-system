@@ -30,4 +30,9 @@ public class TypeController {
     public ResponseMap listType(@PathVariable Integer belong,@PathVariable  Integer page,@PathVariable Integer size){
         return typeService.listType(belong,page,size);
     }
+
+    @GetMapping("/list2/{belong}")
+    public ResponseMap listTypeWithOutPage(@PathVariable Integer belong){
+        return typeService.listTypeWithOutPage(belong);
+    }
 }

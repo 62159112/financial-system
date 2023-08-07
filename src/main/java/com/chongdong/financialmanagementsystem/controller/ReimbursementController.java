@@ -42,4 +42,8 @@ public class ReimbursementController {
     public ResponseMap searchReimbursement(@RequestBody SearchModel searchModel){
         return reimbursementService.searchReimbursement(searchModel);
     }
+    @GetMapping("/count")
+    public ResponseMap countReimbursement(){
+        return reimbursementService.countReimbursement();
+    }
 }

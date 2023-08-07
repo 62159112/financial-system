@@ -27,4 +27,6 @@ public interface ExpensesService extends IService<Expenses> {
     Boolean updateWithPayment(Expenses expenses);
 
     Boolean deleteWithPayment(Expenses expenses);
+
+    ResponseMap countExpenses();
 }

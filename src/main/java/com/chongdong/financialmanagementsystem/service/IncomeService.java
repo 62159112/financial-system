@@ -29,4 +29,6 @@ public interface IncomeService extends IService<Income> {
     ResponseMap listIncome(Integer page,Integer size);
 
     ResponseMap searchIncome(SearchModel searchModel);
+
+    ResponseMap countIncome();
 }

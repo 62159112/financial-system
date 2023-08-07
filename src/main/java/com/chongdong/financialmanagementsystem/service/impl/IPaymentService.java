@@ -15,6 +15,8 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -85,6 +87,16 @@ public class IPaymentService extends ServiceImpl<PaymentMapper, Payment>
                 wrapperUtil.wrapperNormal(searchModel.getSearch(), searchModel.getStartTime(), searchModel.getEndTime()));
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
+    }
+
+    @Override
+    public ResponseMap countPayment() {
+        List<Payment> paymentList = this.list();
+        BigDecimal count = BigDecimal.valueOf(0);
+        for (Payment payment : paymentList) {
+            count = count.add(payment.getAmount());
+        }
+        return responseMapUtil.countList(count);
     }
 }
 

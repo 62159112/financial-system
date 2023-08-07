@@ -25,4 +25,6 @@ public interface ProcurementService extends IService<Procurement> {
     Boolean updateWithPayment(Procurement procurement);
 
     Boolean deleteWithPayment(Procurement procurement);
+
+    ResponseMap countProcurement();
 }

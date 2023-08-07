@@ -15,7 +15,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -96,6 +98,16 @@ public class ILaborService extends ServiceImpl<LaborMapper, Labor>
     public Boolean deleteWithPayment(Labor labor) {
         Labor oldLabor = this.getOne(wrapperUtil.wrapperTime(labor.getCreateTime()));
         return this.removeById(oldLabor.getId());
+    }
+
+    @Override
+    public ResponseMap countLabor() {
+        List<Labor> laborList = this.list();
+        BigDecimal count = BigDecimal.valueOf(0);
+        for (Labor labor : laborList) {
+            count = count.add(labor.getAmount());
+        }
+        return responseMapUtil.countList(count);
     }
 }
 

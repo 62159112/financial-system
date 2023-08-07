@@ -24,4 +24,6 @@ public interface PurchaseService extends IService<Purchase> {
     Boolean updateWithPayment(Purchase purchase);
 
     Boolean deleteWithPayment(Purchase purchase);
+
+    ResponseMap countPurchase();
 }

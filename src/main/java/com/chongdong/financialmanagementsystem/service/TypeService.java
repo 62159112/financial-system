@@ -5,6 +5,7 @@ import com.chongdong.financialmanagementsystem.model.Type;
 import com.chongdong.financialmanagementsystem.model.SearchModel;
 import com.chongdong.financialmanagementsystem.model.Type;
 import com.baomidou.mybatisplus.extension.service.IService;
+import jakarta.annotation.Resource;
 
 /**
 * @author cd
@@ -19,5 +20,7 @@ public interface TypeService extends IService<Type> {
     ResponseMap deleteType(Integer id);
 
     ResponseMap listType(Integer belong,Integer page,Integer size);
+
+    ResponseMap listTypeWithOutPage(Integer belong);
 
 }

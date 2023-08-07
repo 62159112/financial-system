@@ -15,7 +15,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -96,6 +98,16 @@ public class  IOperateService extends ServiceImpl<OperateMapper, Operate>
     public Boolean deleteWithPayment(Operate operate) {
         Operate oldOperate = this.getOne(wrapperUtil.wrapperTime(operate.getCreateTime()));
         return this.removeById(oldOperate.getId());
+    }
+
+    @Override
+    public ResponseMap countOperate() {
+        List<Operate> operateList = this.list();
+        BigDecimal count = BigDecimal.valueOf(0);
+        for (Operate operate : operateList) {
+            count = count.add(operate.getAmount());
+        }
+        return responseMapUtil.countList(count);
     }
 }
 

@@ -42,4 +42,8 @@ public class ExpensesController {
     public ResponseMap searchExpenses(@RequestBody SearchModel searchModel){
         return expensesService.searchExpenses(searchModel);
     }
+    @GetMapping("/count")
+    public ResponseMap countExpenses(){
+        return expensesService.countExpenses();
+    }
 }

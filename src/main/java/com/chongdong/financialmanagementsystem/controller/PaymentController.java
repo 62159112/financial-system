@@ -40,4 +40,9 @@ public class PaymentController {
     public Boolean deletePayment(@PathVariable Integer id){
         return paymentUtil.deletePaymentWithOther(id);
     }
+
+    @GetMapping("/count")
+    public ResponseMap countPayment(){
+        return paymentService.countPayment();
+    }
 }

@@ -33,12 +33,17 @@ public class IncomeController {
     }
 
     @PutMapping
-    public Boolean updatePayment(@RequestBody Income income){
+    public Boolean updateIncome(@RequestBody Income income){
         return incomeUtil.updateIncomeWithOther(income);
     }
 
     @DeleteMapping("/{id}")
-    public Boolean deletePayment(@PathVariable Integer id){
+    public Boolean deleteIncome(@PathVariable Integer id){
         return incomeUtil.deleteIncomeWithOther(id);
+    }
+
+    @GetMapping("/count")
+    public ResponseMap countIncome(){
+        return incomeService.countIncome();
     }
 }

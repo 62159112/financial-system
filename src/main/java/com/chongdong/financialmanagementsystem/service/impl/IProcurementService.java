@@ -16,7 +16,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -110,6 +112,16 @@ public class IProcurementService extends ServiceImpl<ProcurementMapper, Procurem
     public Boolean deleteWithPayment(Procurement procurement) {
         Procurement oldProcurement = this.getOne(wrapperUtil.wrapperTime(procurement.getCreateTime()));
         return this.removeById(oldProcurement.getId());
+    }
+
+    @Override
+    public ResponseMap countProcurement() {
+        List<Procurement> procurementList = this.list();
+        BigDecimal count = BigDecimal.valueOf(0);
+        for (Procurement procurement : procurementList) {
+            count = count.add(procurement.getAmount());
+        }
+        return responseMapUtil.countList(count);
     }
 }
 

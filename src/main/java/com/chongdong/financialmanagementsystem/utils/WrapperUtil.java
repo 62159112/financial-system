@@ -1,7 +1,7 @@
 package com.chongdong.financialmanagementsystem.utils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.chongdong.financialmanagementsystem.model.Type;
+import com.baomidou.mybatisplus.core.enums.SqlLike;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -17,14 +17,16 @@ public class WrapperUtil<T> {
      * 搜索通用
      * */
     public QueryWrapper<T> wrapperNormal(String search, String startTime, String endTime) {
-        LocalDateTime start = LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        LocalDateTime end = LocalDateTime.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         QueryWrapper<T> wrapper = new QueryWrapper<>();
-        wrapper.like(StringUtils.hasLength(search), "name", search);
-        wrapper.like(StringUtils.hasLength(search), "type", search);
-        wrapper.like(StringUtils.hasLength(search), "amount", search);
-        wrapper.like(StringUtils.hasLength(search), "director", search);
-        wrapper.between(StringUtils.hasLength(startTime) && StringUtils.hasLength(endTime), "create_time", start, end);
+        if (StringUtils.hasLength(startTime) && StringUtils.hasLength(endTime)){
+            LocalDateTime start = LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            LocalDateTime end = LocalDateTime.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            wrapper.between("create_time", start, end);
+        }
+        wrapper.like(StringUtils.hasLength(search), "name", search)
+                .or().like(StringUtils.hasLength(search), "type", search)
+                .or().like(StringUtils.hasLength(search), "amount", search)
+                .or().like(StringUtils.hasLength(search), "director", search);
         return wrapper;
     }
     /**
@@ -42,7 +44,7 @@ public class WrapperUtil<T> {
      * */
     public QueryWrapper<T> wrapperExpenses(String search, String startTime, String endTime){
         QueryWrapper<T> wrapper = wrapperNormal(search, startTime, endTime);
-        wrapper.like(StringUtils.hasLength(search), "address", search);
+        wrapper.or().like(StringUtils.hasLength(search), "address", search);
         return wrapper;
     }
     /**
@@ -79,11 +81,17 @@ public class WrapperUtil<T> {
         wrapper.eq(StringUtils.hasLength(String.valueOf(belong)),"type_belong",belong);
         return wrapper;
     }
+    /**
+     * 仓库添加修改删除使用
+     * */
     public QueryWrapper<T> wrapperName(String name){
         QueryWrapper<T> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.hasLength(String.valueOf(name)),"name",name);
         return wrapper;
     }
+    /**
+     * 按时间查询单个，子模块同步更新删除使用
+     * */
     public QueryWrapper<T> wrapperTime(Date createTime){
         LocalDateTime localDateTime = createTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         QueryWrapper<T> wrapper = new QueryWrapper<>();

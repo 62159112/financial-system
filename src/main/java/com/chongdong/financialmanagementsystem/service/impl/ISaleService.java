@@ -16,7 +16,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -97,6 +99,16 @@ public class ISaleService extends ServiceImpl<SaleMapper, Sale>
     public Boolean deleteWithIncome(Sale sale) {
         Sale oldSale = this.getOne(wrapperUtil.wrapperTime(sale.getCreateTime()));
         return this.removeById(oldSale.getId());
+    }
+
+    @Override
+    public ResponseMap countSale() {
+        List<Sale> saleList = this.list();
+        BigDecimal count = BigDecimal.valueOf(0);
+        for (Sale sale : saleList) {
+            count = count.add(sale.getAmount());
+        }
+        return responseMapUtil.countList(count);
     }
 }
 

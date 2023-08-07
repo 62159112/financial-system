@@ -42,4 +42,8 @@ public class LaborController {
     public ResponseMap searchLabor(@RequestBody SearchModel searchModel){
         return laborService.searchLabor(searchModel);
     }
+    @GetMapping("/count")
+    public ResponseMap countLabor(){
+        return laborService.countLabor();
+    }
 }

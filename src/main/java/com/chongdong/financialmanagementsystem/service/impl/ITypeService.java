@@ -13,6 +13,7 @@ import com.chongdong.financialmanagementsystem.utils.WrapperUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,6 +53,12 @@ public class ITypeService extends ServiceImpl<TypeMapper, Type>
                 wrapperUtil.wrapperType(belong));
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
+    }
+
+    @Override
+    public ResponseMap listTypeWithOutPage(Integer belong) {
+        List<Type> typeList = this.list(wrapperUtil.wrapperType(belong));
+        return responseMapUtil.getList(typeList);
     }
 }
 

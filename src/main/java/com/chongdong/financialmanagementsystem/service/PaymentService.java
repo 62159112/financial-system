@@ -29,4 +29,6 @@ public interface PaymentService extends IService<Payment> {
     ResponseMap listPayment(Integer page,Integer size);
 
     ResponseMap searchPayment(SearchModel searchModel);
+
+    ResponseMap countPayment();
 }

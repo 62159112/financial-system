@@ -24,4 +24,6 @@ public interface ReimbursementService extends IService<Reimbursement> {
     Boolean updateWithPayment(Reimbursement reimbursement);
 
     Boolean deleteWithPayment(Reimbursement reimbursement);
+
+    ResponseMap countReimbursement();
 }

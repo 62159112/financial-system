@@ -5,6 +5,7 @@ import com.chongdong.financialmanagementsystem.factory.MapFactory;
 import com.chongdong.financialmanagementsystem.model.ResponseMap;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -98,6 +99,19 @@ public class ResponseMapUtil<T>{
             responseMap.setFlag(false);
             responseMap.setData(null);
             responseMap.setMessage("查询列表失败");
+        }
+        return responseMap;
+    }
+
+    public ResponseMap countList(BigDecimal countAmount){
+        if (countAmount!=null){
+            responseMap.setFlag(true);
+            responseMap.setData(countAmount);
+            responseMap.setMessage("统计列表成功");
+        }else {
+            responseMap.setFlag(false);
+            responseMap.setData(null);
+            responseMap.setMessage("统计列表失败");
         }
         return responseMap;
     }

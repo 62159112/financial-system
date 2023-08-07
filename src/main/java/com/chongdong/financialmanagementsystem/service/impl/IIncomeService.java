@@ -2,10 +2,7 @@ package com.chongdong.financialmanagementsystem.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.chongdong.financialmanagementsystem.model.Income;
-import com.chongdong.financialmanagementsystem.model.Payment;
-import com.chongdong.financialmanagementsystem.model.ResponseMap;
-import com.chongdong.financialmanagementsystem.model.SearchModel;
+import com.chongdong.financialmanagementsystem.model.*;
 import com.chongdong.financialmanagementsystem.service.IncomeService;
 import com.chongdong.financialmanagementsystem.mapper.IncomeMapper;
 import com.chongdong.financialmanagementsystem.utils.PageUtil;
@@ -15,6 +12,8 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -83,6 +82,16 @@ public class IIncomeService extends ServiceImpl<IncomeMapper, Income>
                 wrapperUtil.wrapperNormal(searchModel.getSearch(), searchModel.getStartTime(), searchModel.getEndTime()));
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
+    }
+
+    @Override
+    public ResponseMap countIncome() {
+        List<Income> incomeList = this.list();
+        BigDecimal count = BigDecimal.valueOf(0);
+        for (Income income : incomeList) {
+            count = count.add(income.getAmount());
+        }
+        return responseMapUtil.countList(count);
     }
 }
 

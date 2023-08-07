@@ -42,4 +42,8 @@ public class PurchaseController {
     public ResponseMap searchPurchase(@RequestBody SearchModel searchModel){
         return purchaseService.searchPurchase(searchModel);
     }
+    @GetMapping("/count")
+    public ResponseMap countPurchase(){
+        return purchaseService.countPurchase();
+    }
 }
