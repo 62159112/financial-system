@@ -1,9 +1,7 @@
 package com.chongdong.financialmanagementsystem.service;
 
-import com.chongdong.financialmanagementsystem.model.Operate;
+import com.chongdong.financialmanagementsystem.model.*;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.chongdong.financialmanagementsystem.model.ResponseMap;
-import com.chongdong.financialmanagementsystem.model.SearchModel;
 
 /**
 * @author cd
@@ -22,4 +20,8 @@ public interface OperateService extends IService<Operate> {
     ResponseMap listOperate(Integer page,Integer size);
 
     ResponseMap searchOperate(SearchModel searchModel);
+
+    Boolean updateWithPayment(Operate operate);
+
+    Boolean deleteWithPayment(Operate operate);
 }

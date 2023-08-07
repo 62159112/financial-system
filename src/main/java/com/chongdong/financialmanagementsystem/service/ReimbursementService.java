@@ -1,10 +1,7 @@
 package com.chongdong.financialmanagementsystem.service;
 
-import com.chongdong.financialmanagementsystem.model.Purchase;
-import com.chongdong.financialmanagementsystem.model.Reimbursement;
+import com.chongdong.financialmanagementsystem.model.*;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.chongdong.financialmanagementsystem.model.ResponseMap;
-import com.chongdong.financialmanagementsystem.model.SearchModel;
 
 /**
 * @author cd
@@ -23,4 +20,8 @@ public interface ReimbursementService extends IService<Reimbursement> {
     ResponseMap listReimbursement(Integer page,Integer size);
 
     ResponseMap searchReimbursement(SearchModel searchModel);
+
+    Boolean updateWithPayment(Reimbursement reimbursement);
+
+    Boolean deleteWithPayment(Reimbursement reimbursement);
 }

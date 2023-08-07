@@ -98,6 +98,19 @@ public class IProcurementService extends ServiceImpl<ProcurementMapper, Procurem
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
     }
+
+    @Override
+    public Boolean updateWithPayment(Procurement procurement) {
+        Procurement oldProcurement = this.getOne(wrapperUtil.wrapperTime(procurement.getCreateTime()));
+        procurement.setId(oldProcurement.getId());
+        return this.updateById(procurement);
+    }
+
+    @Override
+    public Boolean deleteWithPayment(Procurement procurement) {
+        Procurement oldProcurement = this.getOne(wrapperUtil.wrapperTime(procurement.getCreateTime()));
+        return this.removeById(oldProcurement.getId());
+    }
 }
 
 

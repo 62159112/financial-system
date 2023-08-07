@@ -23,4 +23,8 @@ public interface SaleService extends IService<Sale> {
     ResponseMap listSale(Integer page,Integer size);
 
     ResponseMap searchSale(SearchModel searchModel);
+
+    Boolean updateWithIncome(Sale sale);
+
+    Boolean deleteWithIncome(Sale sale);
 }

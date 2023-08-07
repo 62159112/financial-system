@@ -98,6 +98,19 @@ public class IPurchaseService extends ServiceImpl<PurchaseMapper, Purchase>
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
     }
+
+    @Override
+    public Boolean updateWithPayment(Purchase purchase) {
+        Purchase oldPurchase = this.getOne(wrapperUtil.wrapperTime(purchase.getCreateTime()));
+        purchase.setId(oldPurchase.getId());
+        return this.updateById(purchase);
+    }
+
+    @Override
+    public Boolean deleteWithPayment(Purchase purchase) {
+        Purchase oldPurchase = this.getOne(wrapperUtil.wrapperTime(purchase.getCreateTime()));
+        return this.removeById(oldPurchase.getId());
+    }
 }
 
 

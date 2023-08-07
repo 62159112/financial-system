@@ -84,4 +84,11 @@ public class WrapperUtil<T> {
         wrapper.eq(StringUtils.hasLength(String.valueOf(name)),"name",name);
         return wrapper;
     }
+    public QueryWrapper<T> wrapperTime(Date createTime){
+        LocalDateTime localDateTime = createTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        QueryWrapper<T> wrapper = new QueryWrapper<>();
+        wrapper.eq("create_time",localDateTime);
+        return wrapper;
+    }
+
 }

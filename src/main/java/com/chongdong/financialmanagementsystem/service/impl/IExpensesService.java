@@ -84,6 +84,18 @@ public class IExpensesService extends ServiceImpl<ExpensesMapper, Expenses>
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
     }
+    @Override
+    public Boolean updateWithPayment(Expenses expenses){
+        Expenses oldExpenses = this.getOne(wrapperUtil.wrapperTime(expenses.getCreateTime()));
+        expenses.setId(oldExpenses.getId());
+        return this.updateById(expenses);
+    }
+
+    @Override
+    public Boolean deleteWithPayment(Expenses expenses) {
+        Expenses oldExpenses = this.getOne(wrapperUtil.wrapperTime(expenses.getCreateTime()));
+        return this.removeById(oldExpenses.getId());
+    }
 }
 
 

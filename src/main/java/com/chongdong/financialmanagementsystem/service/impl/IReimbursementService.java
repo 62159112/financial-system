@@ -84,6 +84,19 @@ public class IReimbursementService extends ServiceImpl<ReimbursementMapper, Reim
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
     }
+
+    @Override
+    public Boolean updateWithPayment(Reimbursement reimbursement) {
+        Reimbursement oldReimbursement = this.getOne(wrapperUtil.wrapperTime(reimbursement.getCreateTime()));
+        reimbursement.setId(oldReimbursement.getId());
+        return this.updateById(reimbursement);
+    }
+
+    @Override
+    public Boolean deleteWithPayment(Reimbursement reimbursement) {
+        Reimbursement oldReimbursement = this.getOne(wrapperUtil.wrapperTime(reimbursement.getCreateTime()));
+        return this.removeById(oldReimbursement.getId());
+    }
 }
 
 

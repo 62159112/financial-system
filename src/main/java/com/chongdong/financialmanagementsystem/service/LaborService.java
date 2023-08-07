@@ -1,5 +1,6 @@
 package com.chongdong.financialmanagementsystem.service;
 
+import com.chongdong.financialmanagementsystem.model.Expenses;
 import com.chongdong.financialmanagementsystem.model.Labor;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chongdong.financialmanagementsystem.model.ResponseMap;
@@ -22,4 +23,8 @@ public interface LaborService extends IService<Labor> {
     ResponseMap listLabor(Integer page,Integer size);
 
     ResponseMap searchLabor(SearchModel searchModel);
+
+    Boolean updateWithPayment(Labor labor);
+
+    Boolean deleteWithPayment(Labor labor);
 }

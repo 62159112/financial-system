@@ -1,9 +1,7 @@
 package com.chongdong.financialmanagementsystem.service;
 
-import com.chongdong.financialmanagementsystem.model.Purchase;
+import com.chongdong.financialmanagementsystem.model.*;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.chongdong.financialmanagementsystem.model.ResponseMap;
-import com.chongdong.financialmanagementsystem.model.SearchModel;
 
 /**
 * @author cd
@@ -22,4 +20,8 @@ public interface PurchaseService extends IService<Purchase> {
     ResponseMap listPurchase(Integer page,Integer size);
 
     ResponseMap searchPurchase(SearchModel searchModel);
+
+    Boolean updateWithPayment(Purchase purchase);
+
+    Boolean deleteWithPayment(Purchase purchase);
 }

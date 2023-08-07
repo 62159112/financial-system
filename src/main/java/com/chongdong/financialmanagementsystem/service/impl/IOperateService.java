@@ -84,6 +84,19 @@ public class  IOperateService extends ServiceImpl<OperateMapper, Operate>
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
     }
+
+    @Override
+    public Boolean updateWithPayment(Operate operate) {
+        Operate oldOperate = this.getOne(wrapperUtil.wrapperTime(operate.getCreateTime()));
+        operate.setId(oldOperate.getId());
+        return this.updateById(operate);
+    }
+
+    @Override
+    public Boolean deleteWithPayment(Operate operate) {
+        Operate oldOperate = this.getOne(wrapperUtil.wrapperTime(operate.getCreateTime()));
+        return this.removeById(oldOperate.getId());
+    }
 }
 
 

@@ -1,8 +1,10 @@
 package com.chongdong.financialmanagementsystem.controller;
 
+import com.chongdong.financialmanagementsystem.model.Payment;
 import com.chongdong.financialmanagementsystem.model.ResponseMap;
 import com.chongdong.financialmanagementsystem.model.SearchModel;
 import com.chongdong.financialmanagementsystem.service.PaymentService;
+import com.chongdong.financialmanagementsystem.utils.PaymentUtil;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 public class PaymentController {
     @Resource
     PaymentService paymentService;
+    @Resource
+    PaymentUtil paymentUtil;
 
     @GetMapping("/{id}")
     public ResponseMap getPayment(@PathVariable Integer id){
@@ -25,5 +29,15 @@ public class PaymentController {
     @GetMapping("/search")
     public ResponseMap searchPayment(@RequestBody SearchModel searchModel){
         return paymentService.searchPayment(searchModel);
+    }
+
+    @PutMapping
+    public Boolean updatePayment(@RequestBody Payment payment){
+        return paymentUtil.updatePaymentWithOther(payment);
+    }
+
+    @DeleteMapping("/{id}")
+    public Boolean deletePayment(@PathVariable Integer id){
+        return paymentUtil.deletePaymentWithOther(id);
     }
 }

@@ -85,6 +85,19 @@ public class ISaleService extends ServiceImpl<SaleMapper, Sale>
         Map<String, Object> modelMap = pageUtil.getModelMap(pageList);
         return responseMapUtil.getPageList(pageList,modelMap);
     }
+
+    @Override
+    public Boolean updateWithIncome(Sale sale) {
+        Sale oldSale = this.getOne(wrapperUtil.wrapperTime(sale.getCreateTime()));
+        sale.setId(oldSale.getId());
+        return this.updateById(sale);
+    }
+
+    @Override
+    public Boolean deleteWithIncome(Sale sale) {
+        Sale oldSale = this.getOne(wrapperUtil.wrapperTime(sale.getCreateTime()));
+        return this.removeById(oldSale.getId());
+    }
 }
 
 

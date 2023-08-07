@@ -1,10 +1,8 @@
 package com.chongdong.financialmanagementsystem.service;
 
-import com.chongdong.financialmanagementsystem.model.Procurement;
+import com.chongdong.financialmanagementsystem.model.*;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chongdong.financialmanagementsystem.model.Procurement;
-import com.chongdong.financialmanagementsystem.model.ResponseMap;
-import com.chongdong.financialmanagementsystem.model.SearchModel;
 
 /**
 * @author cd
@@ -23,4 +21,8 @@ public interface ProcurementService extends IService<Procurement> {
     ResponseMap listProcurement(Integer page,Integer size);
 
     ResponseMap searchProcurement(SearchModel searchModel);
+
+    Boolean updateWithPayment(Procurement procurement);
+
+    Boolean deleteWithPayment(Procurement procurement);
 }

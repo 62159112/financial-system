@@ -85,6 +85,18 @@ public class ILaborService extends ServiceImpl<LaborMapper, Labor>
         return responseMapUtil.getPageList(pageList,modelMap);
     }
 
+    @Override
+    public Boolean updateWithPayment(Labor labor) {
+        Labor oldLabor = this.getOne(wrapperUtil.wrapperTime(labor.getCreateTime()));
+        labor.setId(oldLabor.getId());
+        return this.updateById(labor);
+    }
+
+    @Override
+    public Boolean deleteWithPayment(Labor labor) {
+        Labor oldLabor = this.getOne(wrapperUtil.wrapperTime(labor.getCreateTime()));
+        return this.removeById(oldLabor.getId());
+    }
 }
 
 

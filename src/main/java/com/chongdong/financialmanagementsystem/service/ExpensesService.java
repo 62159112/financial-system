@@ -23,4 +23,8 @@ public interface ExpensesService extends IService<Expenses> {
     ResponseMap listExpenses(Integer page,Integer size);
 
     ResponseMap searchExpenses(SearchModel searchModel);
+
+    Boolean updateWithPayment(Expenses expenses);
+
+    Boolean deleteWithPayment(Expenses expenses);
 }
