@@ -52,8 +52,8 @@ public class WrapperUtil<T> {
      * */
     public QueryWrapper<T> wrapperInventory(String search, String startTime, String endTime){
         QueryWrapper<T> wrapper = wrapperNormal(search, startTime, endTime);
-        wrapper.like(StringUtils.hasLength(search), "total", search);
-        wrapper.like(StringUtils.hasLength(search), "used_quantity", search);
+        wrapper.or().like(StringUtils.hasLength(search), "total", search)
+                .or().like(StringUtils.hasLength(search), "used_quantity", search);
         return wrapper;
     }
     /**
@@ -61,7 +61,7 @@ public class WrapperUtil<T> {
      * */
     public QueryWrapper<T> wrapperProcurement(String search, String startTime, String endTime){
         QueryWrapper<T> wrapper = wrapperNormal(search, startTime, endTime);
-        wrapper.like(StringUtils.hasLength(search), "quantity", search);
+        wrapper.or().like(StringUtils.hasLength(search), "quantity", search);
         return wrapper;
     }
     /**
@@ -69,8 +69,8 @@ public class WrapperUtil<T> {
      * */
     public QueryWrapper<T> wrapperSale(String search, String startTime, String endTime){
         QueryWrapper<T> wrapper = wrapperNormal(search, startTime, endTime);
-        wrapper.like(StringUtils.hasLength(search), "quantity", search);
-        wrapper.like(StringUtils.hasLength(search), "purchaser", search);
+        wrapper.or().like(StringUtils.hasLength(search), "quantity", search)
+                .or().like(StringUtils.hasLength(search), "purchaser", search);
         return wrapper;
     }
     /**
