@@ -13,6 +13,11 @@ import java.util.Date;
 
 @Service
 public class WrapperUtil<T> {
+    public QueryWrapper<T> wrapperTimeDesc(){
+        QueryWrapper<T> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("create_time");
+        return wrapper;
+    }
     /**
      * 搜索通用
      * */
@@ -27,6 +32,7 @@ public class WrapperUtil<T> {
                 .or().like(StringUtils.hasLength(search), "type", search)
                 .or().like(StringUtils.hasLength(search), "amount", search)
                 .or().like(StringUtils.hasLength(search), "director", search);
+        wrapper.orderByDesc("create_time");
         return wrapper;
     }
     /**

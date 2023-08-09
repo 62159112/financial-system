@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chongdong.financialmanagementsystem.factory.MapFactory;
 import com.chongdong.financialmanagementsystem.model.ResponseMap;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -112,6 +113,21 @@ public class ResponseMapUtil<T>{
             responseMap.setFlag(false);
             responseMap.setData(null);
             responseMap.setMessage("统计列表失败");
+        }
+        return responseMap;
+    }
+
+    public ResponseMap getBindingResult(BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(e ->{
+                responseMap.setFlag(false);
+                responseMap.setData("校验失败");
+                responseMap.setMessage(e.getDefaultMessage());
+            });
+        }else {
+            responseMap.setFlag(true);
+            responseMap.setData(null);
+            responseMap.setMessage("校验成功");
         }
         return responseMap;
     }
